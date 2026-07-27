@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { useStore } from "@/lib/store";
 import { computeReminders, markNotified, unnotifiedToday, type Reminder } from "@/lib/reminders";
+import { asset } from "@/lib/basePath";
 
 const CHECK_INTERVAL_MS = 5 * 60 * 1000; // re-check every 5 minutes while open
 
@@ -15,7 +16,7 @@ export function ReminderManager() {
   useEffect(() => {
     if (typeof navigator === "undefined" || !("serviceWorker" in navigator)) return;
     navigator.serviceWorker
-      .register("/sw.js")
+      .register(asset("/sw.js"))
       .then((reg) => {
         swReg.current = reg;
       })
@@ -57,10 +58,10 @@ export function ReminderManager() {
         navigator.serviceWorker.controller?.postMessage({ type: "notify", notifications: toSend });
         // controller can be null on first load; fall back to direct SW call.
         if (!navigator.serviceWorker.controller) {
-          toSend.forEach((n) => reg.showNotification(n.title, { body: n.body, tag: n.tag, icon: "/icon.svg" }));
+          toSend.forEach((n) => reg.showNotification(n.title, { body: n.body, tag: n.tag, icon: asset("/icon.svg") }));
         }
       } else {
-        toSend.forEach((n) => new Notification(n.title, { body: n.body, tag: n.tag, icon: "/icon.svg" }));
+        toSend.forEach((n) => new Notification(n.title, { body: n.body, tag: n.tag, icon: asset("/icon.svg") }));
       }
       markNotified(pending);
     };

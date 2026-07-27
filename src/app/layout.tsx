@@ -3,12 +3,14 @@ import "./globals.css";
 import { StoreProvider } from "@/lib/store";
 import { ThemeProvider, THEME_INIT_SCRIPT } from "@/lib/theme";
 import { AppShell } from "@/components/AppShell";
+import { asset } from "@/lib/basePath";
+import { fraunces, geist } from "@/lib/fonts";
 
 export const metadata: Metadata = {
   title: "Subscription Ghost — find & cancel forgotten subscriptions",
   description:
     "Track recurring subscriptions, spot the ones you've forgotten, and stop paying for what you don't use. Private and on-device.",
-  manifest: "/manifest.webmanifest",
+  manifest: asset("/manifest.webmanifest"),
   appleWebApp: { capable: true, title: "Sub Ghost", statusBarStyle: "default" },
 };
 
@@ -23,7 +25,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={`${fraunces.variable} ${geist.variable}`}>
       <head>
         {/* Apply the saved theme before first paint to avoid a flash. */}
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />

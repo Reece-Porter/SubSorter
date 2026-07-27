@@ -2,38 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ---- Self-hosted fonts (offline, no CDN) ---- */
-@font-face {
-  font-family: "Fraunces";
-  font-style: normal;
-  font-weight: 100 900;
-  font-display: swap;
-  src: url("/fonts/fraunces-var.woff2") format("woff2");
-}
-@font-face {
-  font-family: "Fraunces";
-  font-style: italic;
-  font-weight: 100 900;
-  font-display: swap;
-  src: url("/fonts/fraunces-var-italic.woff2") format("woff2");
-}
-@font-face {
-  font-family: "Geist";
-  font-style: normal;
-  font-weight: 100 900;
-  font-display: swap;
-  src: url("/fonts/geist-var.woff2") format("woff2");
-}
-
 /* =====================================================================
    Design tokens — "a modern personal ledger"
    Warm stone paper · deep ink · a single garnet accent for urgency.
    Centralised here so every page/component reuses the same system.
+   Fonts (--font-serif / --font-sans) are provided by next/font in layout.tsx.
    ===================================================================== */
 :root {
-  --font-serif: "Fraunces", Georgia, "Times New Roman", serif;
-  --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-
   --paper: #f0eee8;
   --card: #fbfaf7;
   --sunken: #e9e7e0;

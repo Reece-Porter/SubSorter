@@ -1,5 +1,6 @@
 import type { ExtractionResult } from "./types";
 import { extractFromTextLines } from "./text";
+import { asset } from "@/lib/basePath";
 
 /**
  * Extract text from a PDF entirely in the browser (no upload). Uses pdfjs-dist,
@@ -9,7 +10,7 @@ import { extractFromTextLines } from "./text";
 export async function extractFromPdf(file: File): Promise<ExtractionResult & { scannedLikely: boolean }> {
   const pdfjs = await import("pdfjs-dist");
   // Worker is served locally from /public — nothing leaves the device.
-  pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
+  pdfjs.GlobalWorkerOptions.workerSrc = asset("/pdf.worker.min.mjs");
 
   const buf = await file.arrayBuffer();
   const doc = await pdfjs.getDocument({ data: buf }).promise;
@@ -63,7 +64,7 @@ export async function extractFromPdf(file: File): Promise<ExtractionResult & { s
  */
 export async function renderPdfToCanvases(file: File): Promise<HTMLCanvasElement[]> {
   const pdfjs = await import("pdfjs-dist");
-  pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
+  pdfjs.GlobalWorkerOptions.workerSrc = asset("/pdf.worker.min.mjs");
   const buf = await file.arrayBuffer();
   const doc = await pdfjs.getDocument({ data: buf }).promise;
   const canvases: HTMLCanvasElement[] = [];

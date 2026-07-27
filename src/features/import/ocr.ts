@@ -1,17 +1,18 @@
 import type { ExtractionResult } from "./types";
 import { extractFromTextLines } from "./text";
+import { asset } from "@/lib/basePath";
 
 export type OcrProgress = (status: string, progress: number) => void;
 
 /**
  * Tesseract engine + language data are self-hosted under /public/tesseract, so OCR
  * runs fully offline with no third-party CDN — nothing about the statement (or even
- * the fact that OCR ran) leaves the device.
+ * the fact that OCR ran) leaves the device. asset() adds the base path on GitHub Pages.
  */
 const TESSERACT_OPTIONS = {
-  workerPath: "/tesseract/worker.min.js",
-  corePath: "/tesseract",
-  langPath: "/tesseract/lang",
+  workerPath: asset("/tesseract/worker.min.js"),
+  corePath: asset("/tesseract"),
+  langPath: asset("/tesseract/lang"),
 } as const;
 
 async function makeWorker(onProgress?: OcrProgress) {

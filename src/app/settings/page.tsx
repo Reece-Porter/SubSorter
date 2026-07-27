@@ -7,6 +7,7 @@ import { useStore } from "@/lib/store";
 import { useTheme, type ThemePref } from "@/lib/theme";
 import { CURRENCIES } from "@/lib/types";
 import { STORAGE_KEY } from "@/lib/storage";
+import { asset } from "@/lib/basePath";
 
 function SectionHead({ title, icon }: { title: string; icon?: React.ReactNode }) {
   return (
@@ -66,7 +67,7 @@ export default function SettingsPage() {
       updateSettings({ notificationsEnabled: true });
       new Notification("Reminders on", {
         body: "We'll nudge you here while Subscription Ghost is open.",
-        icon: "/icon.svg",
+        icon: asset("/icon.svg"),
       });
     }
   };
@@ -77,7 +78,7 @@ export default function SettingsPage() {
     if (Notification.permission !== "granted") return;
     new Notification("Test reminder", {
       body: "This is how a renewal reminder will look.",
-      icon: "/icon.svg",
+      icon: asset("/icon.svg"),
     });
   };
 
