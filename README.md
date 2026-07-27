@@ -74,16 +74,18 @@ npm run build    # static export → ./out
 ## Deploy (GitHub Pages)
 
 The app is a fully client-side static export, so it hosts on GitHub Pages with no
-server. `.github/workflows/deploy.yml` builds and deploys on every push to the
-default branch:
+server. `.github/workflows/deploy.yml` builds the export on every push to the
+default branch and publishes it to the **`gh-pages`** branch.
 
-- **Live URL:** https://reece-porter.github.io/SubSorter/
+- **Live URL (once Pages is on):** https://reece-porter.github.io/SubSorter/
 - The build sets `NEXT_PUBLIC_BASE_PATH` to the repo path so assets, the service
   worker, the pdf.js worker, and the Tesseract engine all resolve under `/SubSorter/`.
 - Fonts are loaded via `next/font` so their URLs are base-path-correct.
 
-First deploy note: the workflow enables Pages automatically. If a run fails on
-permissions, enable Pages once under **Settings → Pages → Source: GitHub Actions**.
+**One-time setup (repo owner):** the workflow can push `gh-pages` but can't flip
+the Pages switch for you. In **Settings → Pages → Build and deployment**, set
+**Source: Deploy from a branch**, then **Branch: `gh-pages` / `(root)`** and Save.
+The site goes live a minute later, and every future push refreshes it automatically.
 
 ## Data & privacy
 
