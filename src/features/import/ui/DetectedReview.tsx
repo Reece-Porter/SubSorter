@@ -66,7 +66,7 @@ export function DetectedReview({
       </div>
 
       {rows.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-line bg-canvas-card px-6 py-10 text-center text-sm text-ink-500">
+        <div className="rounded-2xl border border-dashed border-hairline bg-card px-6 py-10 text-center text-sm text-ink-500">
           No recurring charges stood out. You can go back and try another statement, or add subscriptions manually.
         </div>
       ) : (
@@ -75,8 +75,8 @@ export function DetectedReview({
             <div
               key={r.id}
               className={cx(
-                "rounded-2xl border bg-canvas-card p-4 shadow-card transition-opacity",
-                r.included ? "border-line" : "border-line opacity-60"
+                "rounded-2xl border bg-card p-4 shadow-card transition-opacity",
+                r.included ? "border-hairline" : "border-hairline opacity-60"
               )}
             >
               <div className="flex items-start gap-3">
@@ -84,7 +84,7 @@ export function DetectedReview({
                   type="checkbox"
                   checked={r.included}
                   onChange={(e) => update(r.id, { included: e.target.checked })}
-                  className="mt-1 h-4 w-4 shrink-0 accent-brand-500"
+                  className="mt-1 h-4 w-4 shrink-0 accent-accent-500"
                   aria-label={`Include ${r.name}`}
                 />
                 <div className="min-w-0 flex-1">
@@ -155,7 +155,7 @@ export function DetectedReview({
                       {r.reasons.length > 0 && (
                         <ul className="mt-2 space-y-0.5">
                           {r.reasons.map((reason, i) => (
-                            <li key={i} className="flex items-start gap-1.5 text-xs text-caution-600">
+                            <li key={i} className="flex items-start gap-1.5 text-xs text-accent-ink">
                               <span aria-hidden>⚠</span>
                               {reason}
                             </li>
@@ -168,12 +168,12 @@ export function DetectedReview({
               </div>
 
               {!r.editing && (
-                <div className="mt-3 flex items-center gap-3 border-t border-line pt-2.5 pl-7">
-                  <button className="text-xs font-medium text-brand-600 hover:underline" onClick={() => update(r.id, { editing: true })}>
+                <div className="mt-3 flex items-center gap-3 border-t border-hairline pt-2.5 pl-7">
+                  <button className="text-xs font-medium text-accent-ink hover:underline" onClick={() => update(r.id, { editing: true })}>
                     Edit
                   </button>
                   <button
-                    className="text-xs font-medium text-ink-500 hover:text-urgent-600"
+                    className="text-xs font-medium text-ink-500 hover:text-danger-600"
                     onClick={() => setRows((rs) => rs.filter((x) => x.id !== r.id))}
                   >
                     Dismiss
@@ -185,7 +185,7 @@ export function DetectedReview({
         </div>
       )}
 
-      <div className="sticky bottom-16 sm:bottom-4 z-10 rounded-2xl border border-line bg-canvas-card/95 p-3 shadow-pop backdrop-blur">
+      <div className="sticky bottom-16 sm:bottom-4 z-10 rounded-2xl border border-hairline bg-card/95 p-3 shadow-pop backdrop-blur">
         <div className="flex items-center justify-between gap-3">
           <div className="text-sm">
             <span className="font-semibold text-ink-900">{includedRows.length} selected</span>

@@ -25,7 +25,7 @@ export function Dropzone({ onFile, disabled }: { onFile: (file: File) => void; d
       }}
       className={cx(
         "rounded-2xl border-2 border-dashed px-6 py-12 text-center transition-colors",
-        dragging ? "border-brand-500 bg-brand-50/60" : "border-line bg-canvas-card",
+        dragging ? "border-accent-500 bg-accent-50/60" : "border-hairline bg-card",
         disabled && "opacity-60 pointer-events-none"
       )}
     >
@@ -36,7 +36,7 @@ export function Dropzone({ onFile, disabled }: { onFile: (file: File) => void; d
         className="hidden"
         onChange={(e) => handleFiles(e.target.files)}
       />
-      <div className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-brand-50 text-brand-500">
+      <div className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-accent-50 text-accent-ink">
         <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
           <path d="M12 16V4M8 8l4-4 4 4" />
           <path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" />
@@ -46,7 +46,7 @@ export function Dropzone({ onFile, disabled }: { onFile: (file: File) => void; d
       <button
         type="button"
         onClick={() => inputRef.current?.click()}
-        className="mt-2 rounded-xl bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600"
+        className="mt-2 rounded-xl bg-ink px-4 py-2 text-sm font-medium text-paper hover:opacity-90"
       >
         Choose a file
       </button>

@@ -34,12 +34,12 @@ export default function StatsPage() {
   const savings = savingsSince(subscriptions);
   const maxCat = byCategory[0]?.monthly ?? 0;
 
-  if (!ready) return <div className="h-40 animate-pulse rounded-2xl bg-canvas-sunken" />;
+  if (!ready) return <div className="h-40 animate-pulse rounded-2xl bg-sunken" />;
 
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-xl font-semibold text-ink-900">Stats</h1>
+        <h1 className="serif text-[26px] tracking-tight text-ink-900">Stats</h1>
         <p className="text-sm text-ink-500">Where your recurring money goes.</p>
       </div>
 
@@ -56,7 +56,7 @@ export default function StatsPage() {
         </div>
       </div>
 
-      <section className="rounded-2xl border border-line bg-canvas-card p-5 shadow-card">
+      <section className="rounded-2xl border border-hairline bg-card p-5 shadow-card">
         <h2 className="text-sm font-semibold text-ink-900">Spend by category</h2>
         <p className="text-xs text-ink-500">Monthly-equivalent, active subscriptions</p>
 
@@ -85,7 +85,7 @@ export default function StatsPage() {
                       <span className="ml-1.5 text-xs font-normal text-ink-400">{share}%</span>
                     </span>
                   </div>
-                  <div className="h-2.5 overflow-hidden rounded-full bg-canvas-sunken">
+                  <div className="h-2.5 overflow-hidden rounded-full bg-sunken">
                     <div
                       className="h-full rounded-full transition-all"
                       style={{ width: `${pct}%`, backgroundColor: categoryColor(cat) }}

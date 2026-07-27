@@ -46,13 +46,13 @@ export default function DashboardPage() {
   if (!ready) {
     return (
       <div className="space-y-4">
-        <div className="h-8 w-40 animate-pulse rounded-lg bg-canvas-sunken" />
+        <div className="h-8 w-40 animate-pulse rounded-lg bg-sunken" />
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
           {[0, 1, 2].map((i) => (
-            <div key={i} className="h-24 animate-pulse rounded-2xl bg-canvas-sunken" />
+            <div key={i} className="h-24 animate-pulse rounded-2xl bg-sunken" />
           ))}
         </div>
-        <div className="h-40 animate-pulse rounded-2xl bg-canvas-sunken" />
+        <div className="h-40 animate-pulse rounded-2xl bg-sunken" />
       </div>
     );
   }
@@ -112,7 +112,7 @@ export default function DashboardPage() {
           <section>
             <h2 className="mb-3 text-sm font-semibold text-ink-700">Active — soonest renewals first</h2>
             {active.length === 0 ? (
-              <p className="rounded-2xl border border-dashed border-line bg-canvas-card px-4 py-8 text-center text-sm text-ink-500">
+              <p className="rounded-2xl border border-dashed border-hairline bg-card px-4 py-8 text-center text-sm text-ink-500">
                 No active subscriptions. Add one to get started.
               </p>
             ) : (

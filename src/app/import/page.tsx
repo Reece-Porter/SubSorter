@@ -81,7 +81,7 @@ export default function ImportPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-semibold text-ink-900">Import from a statement</h1>
+          <h1 className="serif text-[26px] tracking-tight text-ink-900">Import from a statement</h1>
           <p className="text-sm text-ink-500">Find subscriptions in a bank or card statement.</p>
         </div>
         <Link href="/" className="text-sm font-medium text-ink-500 hover:text-ink-900">
@@ -90,7 +90,7 @@ export default function ImportPage() {
       </div>
 
       {/* Privacy banner */}
-      <div className="flex items-start gap-2 rounded-2xl border border-brand-100 bg-brand-50/50 px-4 py-3 text-sm text-ink-700">
+      <div className="flex items-start gap-2.5 rounded-2xl border border-hairline bg-sunken px-4 py-3 text-sm text-ink-700">
         <span aria-hidden className="mt-0.5">🔒</span>
         <p>
           Your statement is processed <strong>entirely in this browser</strong> and never uploaded. CSV or a text-based
@@ -98,7 +98,7 @@ export default function ImportPage() {
         </p>
       </div>
 
-      {error && <div className="rounded-xl bg-urgent-50 px-4 py-3 text-sm text-urgent-600">{error}</div>}
+      {error && <div className="rounded-xl bg-danger-50 px-4 py-3 text-sm text-danger-600">{error}</div>}
 
       {step === "upload" && (
         <>
@@ -121,12 +121,12 @@ export default function ImportPage() {
       )}
 
       {step === "working" && (
-        <div className="rounded-2xl border border-line bg-canvas-card px-6 py-14 text-center">
-          <div className="mx-auto h-10 w-10 animate-spin rounded-full border-2 border-brand-100 border-t-brand-500" />
+        <div className="rounded-2xl border border-hairline bg-card px-6 py-14 text-center">
+          <div className="mx-auto h-10 w-10 animate-spin rounded-full border-2 border-hairline border-t-accent-500" />
           <p className="mt-4 text-sm font-medium text-ink-800">{progress?.label ?? "Working…"}</p>
           {progress && progress.pct > 0 && (
-            <div className="mx-auto mt-3 h-1.5 w-56 overflow-hidden rounded-full bg-canvas-sunken">
-              <div className="h-full rounded-full bg-brand-500 transition-all" style={{ width: `${progress.pct}%` }} />
+            <div className="mx-auto mt-3 h-1.5 w-56 overflow-hidden rounded-full bg-sunken">
+              <div className="h-full rounded-full bg-accent-500 transition-all" style={{ width: `${progress.pct}%` }} />
             </div>
           )}
           <p className="mt-3 text-xs text-ink-400">Processing on your device — nothing is uploaded.</p>
@@ -136,7 +136,7 @@ export default function ImportPage() {
       {step === "preview" && result && (
         <>
           {result.scannedLikely && (
-            <div className="rounded-2xl border border-caution-500/30 bg-caution-50/60 px-4 py-3">
+            <div className="rounded-2xl border border-accent-100 bg-accent-50/60 px-4 py-3">
               <p className="text-sm text-ink-700">
                 This PDF looks scanned (little selectable text). Want to read it with on-device OCR instead?
               </p>

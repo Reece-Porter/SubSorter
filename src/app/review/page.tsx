@@ -25,21 +25,21 @@ export default function ReviewPage() {
     setFormOpen(true);
   };
 
-  if (!ready) return <div className="h-40 animate-pulse rounded-2xl bg-canvas-sunken" />;
+  if (!ready) return <div className="h-40 animate-pulse rounded-2xl bg-sunken" />;
 
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-xl font-semibold text-ink-900">Review</h1>
+        <h1 className="serif text-[26px] tracking-tight text-ink-900">Review</h1>
         <p className="text-sm text-ink-500">Subscriptions you&apos;ve flagged as &ldquo;not sure I use this&rdquo;.</p>
       </div>
 
       {flagged.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-line bg-canvas-card px-6 py-14 text-center">
-          <span className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-caution-50 text-caution-600">
+        <div className="rounded-2xl border border-dashed border-hairline bg-card px-6 py-14 text-center">
+          <span className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-accent-50 text-accent-ink">
             <IconFlag width={26} height={26} />
           </span>
-          <h2 className="mt-4 text-lg font-semibold text-ink-900">Nothing to review</h2>
+          <h2 className="serif mt-4 text-xl text-ink-900">Nothing to review</h2>
           <p className="mx-auto mt-1.5 max-w-sm text-sm text-ink-500">
             On any subscription card, tap <strong>&ldquo;Not sure I use this&rdquo;</strong> and it&apos;ll appear here so
             you can decide whether to keep or cancel it.
@@ -47,12 +47,14 @@ export default function ReviewPage() {
         </div>
       ) : (
         <>
-          <div className="rounded-2xl border border-caution-500/30 bg-caution-50/50 px-4 py-3">
-            <p className="text-sm text-ink-700">
+          <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-accent-100 bg-accent-50/60 px-5 py-4">
+            <p className="max-w-md text-sm text-ink-700">
               You&apos;re unsure about <strong>{flagged.length}</strong>{" "}
-              {flagged.length === 1 ? "subscription" : "subscriptions"}, worth{" "}
-              <strong className="tnum">{formatMoney(potentialMonthly, settings.currency)}/mo</strong> · cancelling them
-              could save <strong className="tnum">{formatMoney(potentialMonthly * 12, settings.currency)}/yr</strong>.
+              {flagged.length === 1 ? "subscription" : "subscriptions"}. Cancelling could save you
+            </p>
+            <p className="serif tnum text-[28px] leading-none text-accent-ink">
+              {formatMoney(potentialMonthly * 12, settings.currency)}
+              <span className="font-sans text-sm font-normal text-ink-500">/yr</span>
             </p>
           </div>
           <div className="grid gap-3 sm:grid-cols-2">

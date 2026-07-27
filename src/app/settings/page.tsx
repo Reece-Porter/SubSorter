@@ -1,11 +1,49 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Button, Card, Field, Select } from "@/components/ui";
-import { IconBell, IconCheck } from "@/components/icons";
+import { Button, Card, Field, Select, cx } from "@/components/ui";
+import { IconBell, IconCheck, IconMonitor, IconMoon, IconSun } from "@/components/icons";
 import { useStore } from "@/lib/store";
+import { useTheme, type ThemePref } from "@/lib/theme";
 import { CURRENCIES } from "@/lib/types";
 import { STORAGE_KEY } from "@/lib/storage";
+
+function SectionHead({ title, icon }: { title: string; icon?: React.ReactNode }) {
+  return (
+    <div className="flex items-center gap-2">
+      {icon && <span className="grid h-7 w-7 place-items-center rounded-lg bg-accent-50 text-accent-ink">{icon}</span>}
+      <h2 className="text-sm font-semibold text-ink-900">{title}</h2>
+    </div>
+  );
+}
+
+function ThemeControl() {
+  const { theme, setTheme } = useTheme();
+  const opts: { value: ThemePref; label: string; icon: React.ReactNode }[] = [
+    { value: "system", label: "System", icon: <IconMonitor width={15} height={15} /> },
+    { value: "light", label: "Light", icon: <IconSun width={15} height={15} /> },
+    { value: "dark", label: "Dark", icon: <IconMoon width={15} height={15} /> },
+  ];
+  return (
+    <div className="inline-flex rounded-xl border border-hairline bg-paper/40 p-1">
+      {opts.map((o) => (
+        <button
+          key={o.value}
+          type="button"
+          onClick={() => setTheme(o.value)}
+          aria-pressed={theme === o.value}
+          className={cx(
+            "flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors",
+            theme === o.value ? "bg-card text-ink-900 shadow-card" : "text-ink-500 hover:text-ink-800"
+          )}
+        >
+          {o.icon}
+          {o.label}
+        </button>
+      ))}
+    </div>
+  );
+}
 
 export default function SettingsPage() {
   const { ready, settings, subscriptions, updateSettings, loadSampleData, clearAll } = useStore();
@@ -68,18 +106,18 @@ export default function SettingsPage() {
     reader.readAsText(file);
   };
 
-  if (!ready) return <div className="h-40 animate-pulse rounded-2xl bg-canvas-sunken" />;
+  if (!ready) return <div className="h-40 animate-pulse rounded-2xl bg-sunken" />;
 
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-xl font-semibold text-ink-900">Settings</h1>
-        <p className="text-sm text-ink-500">Preferences, reminders, and your data.</p>
+        <h1 className="serif text-[26px] tracking-tight text-ink-900">Settings</h1>
+        <p className="text-sm text-ink-500">Preferences, appearance, reminders, and your data.</p>
       </div>
 
       {/* Preferences */}
       <Card className="p-5">
-        <h2 className="text-sm font-semibold text-ink-900">Preferences</h2>
+        <SectionHead title="Preferences" />
         <div className="mt-4 grid gap-4 sm:grid-cols-2">
           <Field label="Currency">
             <Select value={settings.currency} onChange={(e) => updateSettings({ currency: e.target.value })}>
@@ -117,15 +155,19 @@ export default function SettingsPage() {
         </div>
       </Card>
 
+      {/* Appearance */}
+      <Card className="p-5">
+        <SectionHead title="Appearance" />
+        <p className="mt-2 text-sm text-ink-600">Match your device, or lock the app to light or dark.</p>
+        <div className="mt-4">
+          <ThemeControl />
+        </div>
+      </Card>
+
       {/* Reminders */}
       <Card className="p-5">
-        <div className="flex items-center gap-2">
-          <span className="grid h-7 w-7 place-items-center rounded-lg bg-brand-50 text-brand-600">
-            <IconBell width={16} height={16} />
-          </span>
-          <h2 className="text-sm font-semibold text-ink-900">Reminders &amp; notifications</h2>
-        </div>
-        <div className="mt-3 rounded-xl bg-canvas-sunken px-4 py-3 text-sm text-ink-600">
+        <SectionHead title="Reminders & notifications" icon={<IconBell width={16} height={16} />} />
+        <div className="mt-3 rounded-xl bg-sunken px-4 py-3 text-sm text-ink-600">
           <p>
             <strong>How reminders work here.</strong> With no account or server, Subscription Ghost can&apos;t push
             alerts when the app is fully closed. So:
@@ -171,7 +213,7 @@ export default function SettingsPage() {
 
       {/* Data */}
       <Card className="p-5">
-        <h2 className="text-sm font-semibold text-ink-900">Your data</h2>
+        <SectionHead title="Your data" />
         <p className="mt-2 text-sm text-ink-600">
           {subscriptions.length} {subscriptions.length === 1 ? "subscription" : "subscriptions"} stored on this device.
           Export a backup to move to another browser or device.
@@ -197,7 +239,7 @@ export default function SettingsPage() {
           )}
         </div>
 
-        <div className="mt-5 border-t border-line pt-4">
+        <div className="mt-5 border-t border-hairline pt-4">
           {confirmClear ? (
             <div className="flex flex-wrap items-center gap-2">
               <span className="text-sm text-ink-700">Delete all subscriptions? This can&apos;t be undone.</span>
@@ -216,7 +258,7 @@ export default function SettingsPage() {
               </Button>
             </div>
           ) : (
-            <Button variant="ghost" size="sm" className="text-urgent-600" onClick={() => setConfirmClear(true)}>
+            <Button variant="ghost" size="sm" className="text-danger-600" onClick={() => setConfirmClear(true)}>
               Clear all data
             </Button>
           )}

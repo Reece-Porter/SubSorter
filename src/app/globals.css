@@ -86,12 +86,12 @@
     --ink-05: #2a251f;
     --ink-10: #332e27;
 
-    --accent: #e36a78;
-    --accent-600: #ea8189;
-    --accent-700: #f0929c;
-    --accent-100: #57292d;
-    --accent-50: #2f1b1d;
-    --accent-ink: #f0929c;
+    --accent: #a83744; /* solid fill — white text sits on it in both themes */
+    --accent-600: #922f3b;
+    --accent-700: #7c2531;
+    --accent-100: #573034; /* borders on dark */
+    --accent-50: #2f1b1d; /* tint bg on dark */
+    --accent-ink: #f0929c; /* accent as text/icon on dark ground/tint */
 
     --positive: #82ac8a;
     --positive-600: #96bd9d;
@@ -122,7 +122,7 @@
   --paper: #141210; --card: #1e1b17; --sunken: #26221c; --hairline: #342f28;
   --ink: #f2efe8; --ink-80: #e4e0d7; --ink-70: #c6c0b4; --ink-60: #a49d90;
   --ink-50: #948c7f; --ink-40: #7d766a; --ink-30: #6b6459; --ink-05: #2a251f; --ink-10: #332e27;
-  --accent: #e36a78; --accent-600: #ea8189; --accent-700: #f0929c; --accent-100: #57292d;
+  --accent: #a83744; --accent-600: #922f3b; --accent-700: #7c2531; --accent-100: #573034;
   --accent-50: #2f1b1d; --accent-ink: #f0929c;
   --positive: #82ac8a; --positive-600: #96bd9d; --positive-50: #1d291f;
   --danger: #e88d97; --danger-50: #2f1b1d;

@@ -9,7 +9,7 @@ export function EmptyState({ onAdd }: { onAdd: () => void }) {
   const { loadSampleData } = useStore();
   return (
     <div className="rounded-[22px] border border-dashed border-hairline bg-gradient-to-b from-card to-transparent px-6 py-14 text-center">
-      <span className="mx-auto grid h-[72px] w-[72px] place-items-center rounded-[20px] border border-accent-100 bg-accent-50 text-accent-500">
+      <span className="mx-auto grid h-[72px] w-[72px] place-items-center rounded-[20px] border border-accent-100 bg-accent-50 text-accent-ink">
         <IconGhost width={34} height={34} />
       </span>
       <h2 className="serif mt-5 text-[27px] tracking-tight text-ink-900" style={{ fontVariationSettings: '"opsz" 72, "wght" 540' }}>

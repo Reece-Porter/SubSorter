@@ -37,34 +37,34 @@ export function ExtractionPreview({
       </div>
 
       {notes.map((n, i) => (
-        <div key={i} className="rounded-xl bg-caution-50 px-4 py-3 text-sm text-caution-600">
+        <div key={i} className="rounded-xl bg-accent-50 px-4 py-3 text-sm text-accent-ink">
           {n}
         </div>
       ))}
 
       {flaggedCount > 0 && (
-        <div className="rounded-xl bg-caution-50 px-4 py-3 text-sm text-caution-600">
+        <div className="rounded-xl bg-accent-50 px-4 py-3 text-sm text-accent-ink">
           {flaggedCount} row{flaggedCount === 1 ? "" : "s"} looked unusual and {flaggedCount === 1 ? "is" : "are"} marked
           below — {source === "image" ? "OCR can misread digits, so " : ""}please double-check them.
         </div>
       )}
 
       {transactions.length > 0 ? (
-        <div className="overflow-hidden rounded-2xl border border-line">
+        <div className="overflow-hidden rounded-2xl border border-hairline">
           <div className="max-h-80 overflow-y-auto">
             <table className="w-full text-sm">
-              <thead className="sticky top-0 bg-canvas-sunken text-left text-xs uppercase tracking-wide text-ink-500">
+              <thead className="sticky top-0 bg-sunken text-left text-xs uppercase tracking-wide text-ink-500">
                 <tr>
                   <th className="px-3 py-2 font-medium">Date</th>
                   <th className="px-3 py-2 font-medium">Description</th>
                   <th className="px-3 py-2 text-right font-medium">Amount</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-line">
+              <tbody className="divide-y divide-hairline">
                 {transactions.map((t) => (
-                  <tr key={t.id} className={cx(t.flags.length > 0 && "bg-caution-50/40")}>
+                  <tr key={t.id} className={cx(t.flags.length > 0 && "bg-accent-50/40")}>
                     <td className="whitespace-nowrap px-3 py-2 tnum text-ink-600">
-                      {t.date ?? <span className="text-caution-600">{t.rawDate ?? "—"}</span>}
+                      {t.date ?? <span className="text-accent-ink">{t.rawDate ?? "—"}</span>}
                     </td>
                     <td className="px-3 py-2 text-ink-800">
                       {t.description}
@@ -84,11 +84,11 @@ export function ExtractionPreview({
           </div>
         </div>
       ) : (
-        <details className="rounded-2xl border border-line bg-canvas-card p-4">
+        <details className="rounded-2xl border border-hairline bg-card p-4">
           <summary className="cursor-pointer text-sm font-medium text-ink-700">
             No transactions detected — show raw extracted lines
           </summary>
-          <pre className="mt-3 max-h-64 overflow-auto whitespace-pre-wrap rounded-xl bg-canvas-sunken p-3 text-xs text-ink-600">
+          <pre className="mt-3 max-h-64 overflow-auto whitespace-pre-wrap rounded-xl bg-sunken p-3 text-xs text-ink-600">
             {rawLines.join("\n") || "(nothing extracted)"}
           </pre>
         </details>

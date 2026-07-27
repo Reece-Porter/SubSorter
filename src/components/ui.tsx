@@ -100,7 +100,7 @@ export function Field({
 }
 
 const inputBase =
-  "w-full rounded-xl border border-hairline bg-paper/40 px-3 py-2.5 text-sm text-ink-900 placeholder:text-ink-400 focus:border-accent-500 focus:outline-none focus:ring-2 focus:ring-accent-500/20 transition-colors";
+  "w-full rounded-xl border border-hairline bg-paper px-3 py-2.5 text-sm text-ink-900 placeholder:text-ink-400 focus:border-accent-500 focus:outline-none focus:ring-2 focus:ring-accent-500/20 transition-colors";
 
 export const Input = React.forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement>>(
   function Input({ className, ...props }, ref) {
@@ -108,10 +108,14 @@ export const Input = React.forwardRef<HTMLInputElement, React.InputHTMLAttribute
   }
 );
 
+// A custom chevron (currentColor) so the control matches the theme in both modes.
+const CHEVRON =
+  "bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 fill=%22none%22 stroke=%22%2378736a%22 stroke-width=%221.8%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22 viewBox=%220 0 24 24%22><path d=%22M6 9l6 6 6-6%22/></svg>')] bg-[length:16px] bg-[right_0.7rem_center] bg-no-repeat";
+
 export const Select = React.forwardRef<HTMLSelectElement, React.SelectHTMLAttributes<HTMLSelectElement>>(
   function Select({ className, children, ...props }, ref) {
     return (
-      <select ref={ref} className={cx(inputBase, "appearance-none pr-9 cursor-pointer", className)} {...props}>
+      <select ref={ref} className={cx(inputBase, "appearance-none pr-9 cursor-pointer", CHEVRON, className)} {...props}>
         {children}
       </select>
     );

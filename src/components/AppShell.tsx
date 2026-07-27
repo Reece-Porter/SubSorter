@@ -6,6 +6,7 @@ import { cx } from "./ui";
 import { IconChart, IconFlag, IconGear, IconGhost, IconHome } from "./icons";
 import { useStore } from "@/lib/store";
 import { ReminderManager } from "./ReminderManager";
+import { ThemeToggle } from "./ThemeToggle";
 
 const NAV = [
   { href: "/", label: "Dashboard", icon: IconHome },
@@ -37,26 +38,29 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 <span className="text-[11px] text-ink-500">Private · on this device only</span>
               </span>
             </Link>
-            <nav className="hidden sm:flex items-center gap-1">
-              {NAV.map(({ href, label, icon: Icon }) => (
-                <Link
-                  key={href}
-                  href={href}
-                  className={cx(
-                    "relative flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium transition-colors",
-                    isActive(href) ? "bg-ink-05 text-ink-900" : "text-ink-600 hover:bg-sunken"
-                  )}
-                >
-                  <Icon width={18} height={18} />
-                  {label}
-                  {href === "/review" && flaggedCount > 0 && (
-                    <span className="ml-0.5 rounded-full bg-accent-500 px-1.5 text-[10px] font-semibold text-white">
-                      {flaggedCount}
-                    </span>
-                  )}
-                </Link>
-              ))}
-            </nav>
+            <div className="flex items-center gap-2">
+              <nav className="hidden sm:flex items-center gap-1">
+                {NAV.map(({ href, label, icon: Icon }) => (
+                  <Link
+                    key={href}
+                    href={href}
+                    className={cx(
+                      "relative flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium transition-colors",
+                      isActive(href) ? "bg-ink-05 text-ink-900" : "text-ink-600 hover:bg-sunken"
+                    )}
+                  >
+                    <Icon width={18} height={18} />
+                    {label}
+                    {href === "/review" && flaggedCount > 0 && (
+                      <span className="ml-0.5 rounded-full bg-accent-500 px-1.5 text-[10px] font-semibold text-white">
+                        {flaggedCount}
+                      </span>
+                    )}
+                  </Link>
+                ))}
+              </nav>
+              <ThemeToggle />
+            </div>
           </div>
         </div>
       </header>
