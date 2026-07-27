@@ -6,7 +6,7 @@ export function cx(...parts: Array<string | false | null | undefined>): string {
   return parts.filter(Boolean).join(" ");
 }
 
-type ButtonVariant = "primary" | "secondary" | "ghost" | "danger" | "quiet";
+type ButtonVariant = "primary" | "secondary" | "ghost" | "accent" | "danger" | "quiet";
 type ButtonSize = "sm" | "md";
 
 export function Button({
@@ -16,31 +16,31 @@ export function Button({
   ...props
 }: React.ButtonHTMLAttributes<HTMLButtonElement> & { variant?: ButtonVariant; size?: ButtonSize }) {
   const base =
-    "inline-flex items-center justify-center gap-1.5 rounded-xl font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40 disabled:opacity-50 disabled:pointer-events-none";
+    "inline-flex items-center justify-center gap-1.5 rounded-xl font-medium transition-[background-color,box-shadow,transform,border-color] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-500/45 focus-visible:ring-offset-1 focus-visible:ring-offset-paper active:translate-y-px disabled:opacity-50 disabled:pointer-events-none";
   const sizes: Record<ButtonSize, string> = {
     sm: "text-sm px-3 py-1.5",
     md: "text-sm px-4 py-2.5",
   };
   const variants: Record<ButtonVariant, string> = {
-    primary: "bg-brand-500 text-white hover:bg-brand-600 shadow-sm",
-    secondary: "bg-white text-ink-800 border border-line hover:bg-canvas-sunken",
-    ghost: "text-ink-600 hover:bg-canvas-sunken hover:text-ink-800",
-    danger: "bg-urgent-500 text-white hover:bg-urgent-600 shadow-sm",
-    quiet: "text-brand-600 hover:text-brand-700 hover:underline underline-offset-4",
+    // Primary is the calm, confident ink button — the default call to action.
+    primary: "bg-ink text-paper hover:shadow-cardHover",
+    secondary: "bg-card text-ink-800 border border-hairline hover:bg-sunken",
+    ghost: "text-ink-600 hover:bg-sunken hover:text-ink-900",
+    // Accent (garnet) is reserved for genuine urgency / cancel actions.
+    accent: "bg-accent-500 text-white hover:bg-accent-600 shadow-card",
+    danger: "bg-danger-600 text-white hover:opacity-90 shadow-card",
+    quiet: "text-accent-ink hover:underline underline-offset-4",
   };
   return <button className={cx(base, sizes[size], variants[variant], className)} {...props} />;
 }
 
 export function Card({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <div
-      className={cx("rounded-2xl bg-canvas-card border border-line shadow-card", className)}
-      {...props}
-    />
+    <div className={cx("rounded-2xl bg-card border border-hairline shadow-card", className)} {...props} />
   );
 }
 
-type Tone = "neutral" | "brand" | "positive" | "caution" | "urgent" | "muted";
+type Tone = "neutral" | "accent" | "accentSoft" | "positive" | "muted";
 
 export function Badge({
   tone = "neutral",
@@ -52,12 +52,11 @@ export function Badge({
   children: React.ReactNode;
 }) {
   const tones: Record<Tone, string> = {
-    neutral: "bg-canvas-sunken text-ink-600",
-    brand: "bg-brand-50 text-brand-700",
+    neutral: "bg-sunken text-ink-600",
+    accent: "bg-accent-500 text-white",
+    accentSoft: "bg-accent-50 text-accent-ink",
     positive: "bg-positive-50 text-positive-600",
-    caution: "bg-caution-50 text-caution-600",
-    urgent: "bg-urgent-50 text-urgent-600",
-    muted: "bg-canvas-sunken text-ink-500",
+    muted: "bg-sunken text-ink-500",
   };
   return (
     <span
@@ -92,7 +91,7 @@ export function Field({
       </label>
       {children}
       {error ? (
-        <p className="mt-1 text-xs text-urgent-600">{error}</p>
+        <p className="mt-1 text-xs text-accent-ink">{error}</p>
       ) : hint ? (
         <p className="mt-1 text-xs text-ink-500">{hint}</p>
       ) : null}
@@ -101,7 +100,7 @@ export function Field({
 }
 
 const inputBase =
-  "w-full rounded-xl border border-line bg-white px-3 py-2.5 text-sm text-ink-800 placeholder:text-ink-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20 transition-colors";
+  "w-full rounded-xl border border-hairline bg-paper/40 px-3 py-2.5 text-sm text-ink-900 placeholder:text-ink-400 focus:border-accent-500 focus:outline-none focus:ring-2 focus:ring-accent-500/20 transition-colors";
 
 export const Input = React.forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement>>(
   function Input({ className, ...props }, ref) {
@@ -154,22 +153,22 @@ export function Modal({
   if (!open) return null;
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
-      <div className="absolute inset-0 bg-ink-900/40 backdrop-blur-sm" onClick={onClose} aria-hidden />
+      <div className="absolute inset-0 bg-ink/40 backdrop-blur-sm" onClick={onClose} aria-hidden />
       <div
         role="dialog"
         aria-modal="true"
         aria-label={title}
         className={cx(
-          "relative w-full bg-canvas-card shadow-pop rounded-t-2xl sm:rounded-2xl max-h-[92vh] flex flex-col",
+          "relative w-full bg-card shadow-pop rounded-t-2xl sm:rounded-2xl max-h-[92vh] flex flex-col border border-hairline",
           wide ? "sm:max-w-2xl" : "sm:max-w-md"
         )}
       >
-        <div className="flex items-center justify-between px-5 py-4 border-b border-line">
+        <div className="flex items-center justify-between px-5 py-4 border-b border-hairline">
           <h2 className="text-base font-semibold text-ink-900">{title}</h2>
           <button
             onClick={onClose}
             aria-label="Close"
-            className="rounded-lg p-1.5 text-ink-500 hover:bg-canvas-sunken hover:text-ink-800"
+            className="rounded-lg p-1.5 text-ink-500 hover:bg-sunken hover:text-ink-900"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M18 6 6 18M6 6l12 12" />
@@ -177,7 +176,7 @@ export function Modal({
           </button>
         </div>
         <div className="px-5 py-4 overflow-y-auto">{children}</div>
-        {footer ? <div className="px-5 py-4 border-t border-line bg-canvas-sunken/50 rounded-b-2xl">{footer}</div> : null}
+        {footer ? <div className="px-5 py-4 border-t border-hairline bg-sunken/40 rounded-b-2xl">{footer}</div> : null}
       </div>
     </div>
   );

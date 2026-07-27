@@ -95,7 +95,6 @@ export default function DashboardPage() {
                 label="Monthly spend"
                 value={formatMoney(monthly, settings.currency)}
                 sub="Across active subscriptions"
-                tone="brand"
                 size="lg"
               />
             </div>

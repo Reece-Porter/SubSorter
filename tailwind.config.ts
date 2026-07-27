@@ -1,42 +1,65 @@
 import type { Config } from "tailwindcss";
 
+// All colours resolve to CSS variables defined in globals.css, so light/dark
+// theming and any future re-tint happen in one place.
 const config: Config = {
   content: ["./src/**/*.{ts,tsx}"],
   theme: {
     extend: {
       colors: {
+        paper: "var(--paper)",
+        card: "var(--card)",
+        sunken: "var(--sunken)",
+        hairline: "var(--hairline)",
         ink: {
-          900: "#0f172a",
-          800: "#1e293b",
-          700: "#334155",
-          600: "#475569",
-          500: "#64748b",
-          400: "#94a3b8",
+          DEFAULT: "var(--ink)",
+          900: "var(--ink)",
+          800: "var(--ink-80)",
+          700: "var(--ink-70)",
+          600: "var(--ink-60)",
+          500: "var(--ink-50)",
+          400: "var(--ink-40)",
+          300: "var(--ink-30)",
         },
-        canvas: {
-          DEFAULT: "#f8fafc",
-          card: "#ffffff",
-          sunken: "#f1f5f9",
+        accent: {
+          50: "var(--accent-50)",
+          100: "var(--accent-100)",
+          500: "var(--accent)",
+          600: "var(--accent-600)",
+          700: "var(--accent-700)",
+          ink: "var(--accent-ink)",
         },
-        line: "#e2e8f0",
+        positive: {
+          50: "var(--positive-50)",
+          500: "var(--positive)",
+          600: "var(--positive-600)",
+        },
+        danger: {
+          50: "var(--danger-50)",
+          600: "var(--danger)",
+        },
+
+        /* ---- legacy aliases (pages not yet restyled inherit the new system) ---- */
+        canvas: { DEFAULT: "var(--paper)", card: "var(--card)", sunken: "var(--sunken)" },
+        line: "var(--hairline)",
         brand: {
-          50: "#eef4ff",
-          100: "#dbe6fe",
-          500: "#3457d5",
-          600: "#2c47b8",
-          700: "#243a97",
+          50: "var(--ink-05)",
+          100: "var(--ink-10)",
+          500: "var(--ink)",
+          600: "var(--ink-80)",
+          700: "#000000",
         },
-        positive: { 50: "#ecfdf5", 500: "#0f9d6a", 600: "#0b7d54" },
-        caution: { 50: "#fffbeb", 500: "#d19a00", 600: "#a67c00" },
-        urgent: { 50: "#fef2f2", 500: "#dc2626", 600: "#b91c1c" },
+        caution: { 50: "var(--accent-50)", 500: "var(--accent)", 600: "var(--accent-ink)" },
+        urgent: { 50: "var(--accent-50)", 500: "var(--accent)", 600: "var(--accent-700)" },
       },
       fontFamily: {
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
+        serif: ["var(--font-serif)", "Georgia", "serif"],
       },
       boxShadow: {
-        card: "0 1px 2px 0 rgba(15,23,42,0.04), 0 1px 3px 0 rgba(15,23,42,0.06)",
-        cardHover: "0 4px 12px -2px rgba(15,23,42,0.10)",
-        pop: "0 10px 30px -8px rgba(15,23,42,0.18)",
+        card: "var(--shadow)",
+        cardHover: "var(--shadow-lift)",
+        pop: "var(--shadow-pop)",
       },
       borderRadius: {
         xl: "0.875rem",

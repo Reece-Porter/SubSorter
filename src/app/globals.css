@@ -2,8 +2,131 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ---- Self-hosted fonts (offline, no CDN) ---- */
+@font-face {
+  font-family: "Fraunces";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/fraunces-var.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Fraunces";
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/fraunces-var-italic.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Geist";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/geist-var.woff2") format("woff2");
+}
+
+/* =====================================================================
+   Design tokens — "a modern personal ledger"
+   Warm stone paper · deep ink · a single garnet accent for urgency.
+   Centralised here so every page/component reuses the same system.
+   ===================================================================== */
 :root {
-  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-serif: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --paper: #f0eee8;
+  --card: #fbfaf7;
+  --sunken: #e9e7e0;
+  --hairline: #e1ded5;
+
+  --ink: #1c1a17; /* headings, big numbers */
+  --ink-80: #2e2a23;
+  --ink-70: #47433b; /* body */
+  --ink-60: #605a50;
+  --ink-50: #78736a; /* muted */
+  --ink-40: #948d81;
+  --ink-30: #a8a296; /* subtle */
+  --ink-05: #e9e7e0; /* light ink tint (active states) */
+  --ink-10: #ddd9cf;
+
+  --accent: #a32b39; /* garnet — the one accent */
+  --accent-600: #872231;
+  --accent-700: #6e1b27;
+  --accent-100: #eccccc;
+  --accent-50: #f4e5e4;
+  --accent-ink: #7e1f2c; /* text on tint */
+
+  --positive: #4f7355; /* pine — savings/positive only */
+  --positive-600: #3f5e45;
+  --positive-50: #e7eee6;
+
+  --danger: #7e1f2c; /* destructive (delete) — deep garnet */
+  --danger-50: #f4e5e4;
+
+  --shadow: 0 1px 2px rgba(28, 26, 23, 0.04), 0 1px 3px rgba(28, 26, 23, 0.05);
+  --shadow-lift: 0 14px 34px -16px rgba(28, 26, 23, 0.3);
+  --shadow-pop: 0 24px 60px -24px rgba(28, 26, 23, 0.4);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #141210;
+    --card: #1e1b17;
+    --sunken: #26221c;
+    --hairline: #342f28;
+
+    --ink: #f2efe8;
+    --ink-80: #e4e0d7;
+    --ink-70: #c6c0b4;
+    --ink-60: #a49d90;
+    --ink-50: #948c7f;
+    --ink-40: #7d766a;
+    --ink-30: #6b6459;
+    --ink-05: #2a251f;
+    --ink-10: #332e27;
+
+    --accent: #e36a78;
+    --accent-600: #ea8189;
+    --accent-700: #f0929c;
+    --accent-100: #57292d;
+    --accent-50: #2f1b1d;
+    --accent-ink: #f0929c;
+
+    --positive: #82ac8a;
+    --positive-600: #96bd9d;
+    --positive-50: #1d291f;
+
+    --danger: #e88d97;
+    --danger-50: #2f1b1d;
+
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.35);
+    --shadow-lift: 0 16px 40px -18px rgba(0, 0, 0, 0.7);
+    --shadow-pop: 0 26px 64px -22px rgba(0, 0, 0, 0.8);
+    color-scheme: dark;
+  }
+}
+
+/* Explicit theme overrides win over the media query in both directions. */
+:root[data-theme="light"] {
+  --paper: #f0eee8; --card: #fbfaf7; --sunken: #e9e7e0; --hairline: #e1ded5;
+  --ink: #1c1a17; --ink-80: #2e2a23; --ink-70: #47433b; --ink-60: #605a50;
+  --ink-50: #78736a; --ink-40: #948d81; --ink-30: #a8a296; --ink-05: #e9e7e0; --ink-10: #ddd9cf;
+  --accent: #a32b39; --accent-600: #872231; --accent-700: #6e1b27; --accent-100: #eccccc;
+  --accent-50: #f4e5e4; --accent-ink: #7e1f2c;
+  --positive: #4f7355; --positive-600: #3f5e45; --positive-50: #e7eee6;
+  --danger: #7e1f2c; --danger-50: #f4e5e4;
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --paper: #141210; --card: #1e1b17; --sunken: #26221c; --hairline: #342f28;
+  --ink: #f2efe8; --ink-80: #e4e0d7; --ink-70: #c6c0b4; --ink-60: #a49d90;
+  --ink-50: #948c7f; --ink-40: #7d766a; --ink-30: #6b6459; --ink-05: #2a251f; --ink-10: #332e27;
+  --accent: #e36a78; --accent-600: #ea8189; --accent-700: #f0929c; --accent-100: #57292d;
+  --accent-50: #2f1b1d; --accent-ink: #f0929c;
+  --positive: #82ac8a; --positive-600: #96bd9d; --positive-50: #1d291f;
+  --danger: #e88d97; --danger-50: #2f1b1d;
+  color-scheme: dark;
 }
 
 html {
@@ -11,17 +134,29 @@ html {
 }
 
 body {
-  background-color: theme("colors.canvas.DEFAULT");
-  color: theme("colors.ink.800");
-  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  background-color: var(--paper);
+  color: var(--ink-80);
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
-/* Tabular figures make monetary columns line up cleanly. */
+/* Tabular lining figures so money columns align cleanly. */
 .tnum {
-  font-variant-numeric: tabular-nums;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
   letter-spacing: -0.01em;
+}
+
+/* Fraunces display helper — weighty, editorial numerals. */
+.serif {
+  font-family: var(--font-serif);
+  font-variation-settings: "opsz" 60, "wght" 520, "SOFT" 0, "WONK" 0;
+}
+.serif-hero {
+  font-family: var(--font-serif);
+  font-variation-settings: "opsz" 144, "wght" 560, "SOFT" 0, "WONK" 0;
+  letter-spacing: -0.02em;
 }
 
 @layer utilities {
@@ -31,5 +166,14 @@ body {
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
   }
 }

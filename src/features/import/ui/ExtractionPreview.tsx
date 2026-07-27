@@ -69,7 +69,7 @@ export function ExtractionPreview({
                     <td className="px-3 py-2 text-ink-800">
                       {t.description}
                       {t.flags.map((f) => (
-                        <Badge key={f} tone="caution" className="ml-1.5 align-middle">
+                        <Badge key={f} tone="accentSoft" className="ml-1.5 align-middle">
                           {FLAG_LABEL[f]}
                         </Badge>
                       ))}

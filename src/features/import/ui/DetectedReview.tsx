@@ -15,8 +15,8 @@ interface RowState extends DetectedSubscription {
 
 function ConfidenceBadge({ c }: { c: number }) {
   if (c >= 0.75) return <Badge tone="positive">High confidence</Badge>;
-  if (c >= 0.5) return <Badge tone="brand">Likely</Badge>;
-  return <Badge tone="caution">Uncertain</Badge>;
+  if (c >= 0.5) return <Badge tone="neutral">Likely</Badge>;
+  return <Badge tone="accentSoft">Uncertain</Badge>;
 }
 
 export function DetectedReview({
