@@ -19,15 +19,28 @@ export default function SettingsPage() {
     else setNotifPerm(Notification.permission);
   }, []);
 
-  const requestNotifications = async () => {
+  const enableNotifications = async () => {
     if (!("Notification" in window)) return;
-    const perm = await Notification.requestPermission();
+    let perm = Notification.permission;
+    if (perm === "default") perm = await Notification.requestPermission();
     setNotifPerm(perm);
     if (perm === "granted") {
-      new Notification("Notifications on", {
-        body: "We'll remind you here while Subscription Ghost is open.",
+      updateSettings({ notificationsEnabled: true });
+      new Notification("Reminders on", {
+        body: "We'll nudge you here while Subscription Ghost is open.",
+        icon: "/icon.svg",
       });
     }
+  };
+
+  const disableNotifications = () => updateSettings({ notificationsEnabled: false });
+
+  const sendTestNotification = () => {
+    if (Notification.permission !== "granted") return;
+    new Notification("Test reminder", {
+      body: "This is how a renewal reminder will look.",
+      icon: "/icon.svg",
+    });
   };
 
   const exportData = () => {
@@ -89,6 +102,18 @@ export default function SettingsPage() {
               ))}
             </Select>
           </Field>
+          <Field label="&ldquo;Due soon&rdquo; window" hint="Renewals within this many days are highlighted.">
+            <Select
+              value={String(settings.dueSoonWindowDays)}
+              onChange={(e) => updateSettings({ dueSoonWindowDays: Number(e.target.value) })}
+            >
+              {[3, 5, 7, 10, 14].map((d) => (
+                <option key={d} value={d}>
+                  {d} days
+                </option>
+              ))}
+            </Select>
+          </Field>
         </div>
       </Card>
 
@@ -100,32 +125,47 @@ export default function SettingsPage() {
           </span>
           <h2 className="text-sm font-semibold text-ink-900">Reminders &amp; notifications</h2>
         </div>
-        <p className="mt-3 text-sm text-ink-600">
-          Because everything stays on your device with no account or server,{" "}
-          <strong>reminders can&apos;t be pushed when the app is fully closed.</strong> The{" "}
-          <strong>&ldquo;Due soon&rdquo;</strong> list on your dashboard is the reliable fallback — it&apos;s always
-          there when you open the app.
-        </p>
-        <div className="mt-4">
+        <div className="mt-3 rounded-xl bg-canvas-sunken px-4 py-3 text-sm text-ink-600">
+          <p>
+            <strong>How reminders work here.</strong> With no account or server, Subscription Ghost can&apos;t push
+            alerts when the app is fully closed. So:
+          </p>
+          <ul className="mt-2 space-y-1 text-ink-600">
+            <li>
+              • The <strong>&ldquo;Due soon&rdquo;</strong> list on your dashboard is always there when you open the app —
+              your <strong>reliable</strong> reminder.
+            </li>
+            <li>
+              • Optional <strong>browser notifications</strong> fire for renewals and cancel-reminders while the app (or
+              its installed window) is open in the background.
+            </li>
+          </ul>
+        </div>
+
+        <div className="mt-4 flex flex-wrap items-center gap-3">
           {notifPerm === "unsupported" ? (
             <p className="text-sm text-ink-500">This browser doesn&apos;t support notifications.</p>
-          ) : notifPerm === "granted" ? (
-            <p className="inline-flex items-center gap-2 text-sm font-medium text-positive-600">
-              <IconCheck width={16} height={16} /> Browser notifications enabled (while the app is open)
-            </p>
           ) : notifPerm === "denied" ? (
             <p className="text-sm text-ink-500">
               Notifications are blocked in your browser settings. The Due soon list still works.
             </p>
+          ) : settings.notificationsEnabled && notifPerm === "granted" ? (
+            <>
+              <span className="inline-flex items-center gap-2 text-sm font-medium text-positive-600">
+                <IconCheck width={16} height={16} /> Reminders on (while the app is open)
+              </span>
+              <Button variant="ghost" size="sm" onClick={sendTestNotification}>
+                Send test
+              </Button>
+              <Button variant="ghost" size="sm" onClick={disableNotifications}>
+                Turn off
+              </Button>
+            </>
           ) : (
-            <Button variant="secondary" onClick={requestNotifications}>
-              <IconBell width={16} height={16} /> Enable browser notifications
+            <Button variant="secondary" onClick={enableNotifications}>
+              <IconBell width={16} height={16} /> Enable browser reminders
             </Button>
           )}
-          <p className="mt-2 text-xs text-ink-400">
-            Full local reminder scheduling arrives with the Reminders feature. For now this grants permission so we can
-            alert you while the tab is open.
-          </p>
         </div>
       </Card>
 

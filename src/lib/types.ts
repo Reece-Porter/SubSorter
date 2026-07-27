@@ -46,6 +46,10 @@ export interface Settings {
   currency: string; // ISO 4217 code, e.g. "GBP"
   /** Days before renewal to set the cancel reminder. */
   cancelReminderLeadDays: number;
+  /** Renewals within this many days show in "Due soon" and trigger reminders. */
+  dueSoonWindowDays: number;
+  /** Whether local browser notifications are switched on (also needs OS permission). */
+  notificationsEnabled: boolean;
 }
 
 export interface Store {

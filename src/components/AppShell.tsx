@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { cx } from "./ui";
 import { IconChart, IconFlag, IconGear, IconGhost, IconHome } from "./icons";
 import { useStore } from "@/lib/store";
+import { ReminderManager } from "./ReminderManager";
 
 const NAV = [
   { href: "/", label: "Dashboard", icon: IconHome },
@@ -22,6 +23,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <ReminderManager />
       {/* Desktop / top header */}
       <header className="sticky top-0 z-30 border-b border-line bg-canvas/80 backdrop-blur">
         <div className="mx-auto max-w-5xl px-4 sm:px-6">

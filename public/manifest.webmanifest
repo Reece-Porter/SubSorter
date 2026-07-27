@@ -1,0 +1,12 @@
+{
+  "name": "Subscription Ghost",
+  "short_name": "Sub Ghost",
+  "description": "Find and cancel forgotten subscriptions. Private and on-device.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#3457d5",
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

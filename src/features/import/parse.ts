@@ -168,12 +168,14 @@ export function resolveDateOrder(tokens: DateToken[]): (string | undefined)[] {
  * ------------------------------------------------------------------ */
 
 const NOISE_PREFIXES = /\b(POS|VISA|MASTERCARD|DEBIT|CREDIT|CARD|PAYMENT|PMT|PURCHASE|DIRECT DEBIT|DD|RECURRING|WWW|TXN|REF)\b/gi;
+const CURRENCY_CODES = /\b(GBP|USD|EUR|CAD|AUD|NZD|CHF|JPY|SEK|NOK|DKK)\b/gi;
 
 /** A cleaned, human-readable merchant name for display. */
 export function cleanDescription(input: string): string {
   let s = input.replace(/\s+/g, " ").trim();
   s = s.replace(/\b\d{2}[/.-]\d{2}[/.-]\d{2,4}\b/g, ""); // embedded dates
   s = s.replace(/\b[A-Z]{2,3}#?\d{4,}\b/g, ""); // reference codes
+  s = s.replace(CURRENCY_CODES, " "); // stray currency codes (e.g. "GBP")
   s = s.replace(/\*+/g, " ");
   s = s.replace(/\s{2,}/g, " ").trim();
   // Title-case ALL-CAPS merchants for readability.
@@ -189,6 +191,7 @@ export function cleanDescription(input: string): string {
 export function merchantKey(input: string): string {
   let s = input.toUpperCase();
   s = s.replace(NOISE_PREFIXES, " ");
+  s = s.replace(CURRENCY_CODES, " ");
   s = s.replace(/[^A-Z ]+/g, " "); // drop digits, punctuation, refs
   s = s.replace(/\b[A-Z]\b/g, " "); // drop stray single letters
   s = s.replace(/\s+/g, " ").trim();

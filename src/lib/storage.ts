@@ -5,6 +5,8 @@ export const STORAGE_KEY = "subscription-ghost:v1";
 export const DEFAULT_SETTINGS: Settings = {
   currency: "GBP",
   cancelReminderLeadDays: 3,
+  dueSoonWindowDays: 7,
+  notificationsEnabled: false,
 };
 
 export function emptyStore(): Store {

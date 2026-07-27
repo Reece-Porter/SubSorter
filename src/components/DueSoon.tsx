@@ -8,11 +8,12 @@ import { daysUntil, urgencyFor } from "@/lib/calc";
 import { formatDate, formatMoney } from "@/lib/format";
 import { useStore } from "@/lib/store";
 
-/** Always-visible "due soon" panel: anything active renewing within 7 days. */
+/** Always-visible "due soon" panel: anything active renewing within the configured window. */
 export function DueSoon({ subs }: { subs: Subscription[] }) {
   const { settings } = useStore();
+  const windowDays = settings.dueSoonWindowDays;
   const dueSoon = subs
-    .filter((s) => s.status === "active" && daysUntil(s.nextBillingDate) <= 7)
+    .filter((s) => s.status === "active" && daysUntil(s.nextBillingDate) >= 0 && daysUntil(s.nextBillingDate) <= windowDays)
     .sort((a, b) => daysUntil(a.nextBillingDate) - daysUntil(b.nextBillingDate));
 
   if (dueSoon.length === 0) return null;
@@ -25,7 +26,7 @@ export function DueSoon({ subs }: { subs: Subscription[] }) {
         </span>
         <h2 className="text-sm font-semibold text-ink-900">Due soon</h2>
         <Badge tone="caution">{dueSoon.length}</Badge>
-        <span className="ml-auto text-xs text-ink-500 hidden sm:inline">Renewing within 7 days</span>
+        <span className="ml-auto text-xs text-ink-500 hidden sm:inline">Renewing within {windowDays} days</span>
       </div>
       <ul className="mt-3 divide-y divide-caution-500/15">
         {dueSoon.map((s) => {

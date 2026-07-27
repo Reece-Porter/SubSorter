@@ -4,20 +4,30 @@ import { extractFromTextLines } from "./text";
 export type OcrProgress = (status: string, progress: number) => void;
 
 /**
+ * Tesseract engine + language data are self-hosted under /public/tesseract, so OCR
+ * runs fully offline with no third-party CDN — nothing about the statement (or even
+ * the fact that OCR ran) leaves the device.
+ */
+const TESSERACT_OPTIONS = {
+  workerPath: "/tesseract/worker.min.js",
+  corePath: "/tesseract",
+  langPath: "/tesseract/lang",
+} as const;
+
+async function makeWorker(onProgress?: OcrProgress) {
+  const { createWorker } = await import("tesseract.js");
+  return createWorker("eng", 1, {
+    ...TESSERACT_OPTIONS,
+    logger: (m: { status: string; progress: number }) => onProgress?.(m.status, m.progress),
+  });
+}
+
+/**
  * Run OCR on an image (or a rendered scanned page) fully in the browser using
  * tesseract.js, lazy-imported so its heavy WASM engine only loads on demand.
- *
- * Privacy note: the image never leaves the device — only tesseract's engine code
- * and language data are fetched (from a CDN by default). No statement data is uploaded.
  */
 export async function extractFromImage(file: File, onProgress?: OcrProgress): Promise<ExtractionResult> {
-  const { createWorker } = await import("tesseract.js");
-
-  const worker = await createWorker("eng", 1, {
-    logger: (m: { status: string; progress: number }) => {
-      if (onProgress) onProgress(m.status, m.progress);
-    },
-  });
+  const worker = await makeWorker(onProgress);
 
   try {
     const url = URL.createObjectURL(file);
@@ -36,10 +46,7 @@ export async function extractFromCanvases(
   fileName: string,
   onProgress?: OcrProgress
 ): Promise<ExtractionResult> {
-  const { createWorker } = await import("tesseract.js");
-  const worker = await createWorker("eng", 1, {
-    logger: (m: { status: string; progress: number }) => onProgress?.(m.status, m.progress),
-  });
+  const worker = await makeWorker(onProgress);
   try {
     let text = "";
     for (let i = 0; i < canvases.length; i++) {

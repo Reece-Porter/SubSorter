@@ -28,7 +28,9 @@ no cloud, no backend database — your financial data never leaves your device.
     separate debit/credit columns, mixed date formats, sign inference).
   - **PDF:** text extracted client-side via `pdfjs-dist` (worker served locally from
     `/public`); scanned/image-only PDFs are detected and offered an OCR fallback.
-  - **Image / scanned PDF:** on-device OCR via `tesseract.js`.
+  - **Image / scanned PDF:** on-device OCR via `tesseract.js`. The OCR engine and
+    English language data are **self-hosted under `/public/tesseract`**, so OCR runs
+    fully offline with no third-party CDN — nothing about the statement leaves the device.
   - **Extraction preview** before detection, with garbled-merchant / implausible-amount /
     missing-date rows flagged for the user to check rather than silently included.
   - **Recurring detection** groups repeated merchant+amount charges, infers cadence,
@@ -36,12 +38,21 @@ no cloud, no backend database — your financial data never leaves your device.
     matches start unchecked and must be confirmed.
   - Heavy parsers (`pdfjs-dist`, `tesseract.js`) are **lazy-loaded** — they only enter
     the bundle when that file type is actually imported.
-- **Part 3 — Reminders:** partially in place (Due soon list + notification permission)
+- **Part 3 — Reminders:** ✅ built
+  - Always-visible **Due soon** panel on the dashboard (configurable window) — the
+    reliable, backend-free reminder.
+  - Optional **browser notifications** for renewals and cancel-reminders, fired while
+    the app (or its installed window) is open, de-duplicated to at most once per day.
+  - A **service worker** (offline app shell + notification-click focus) and a
+    **web manifest**, so the app is installable / add-to-home-screen.
+  - The UI is explicit that, with no backend, reminders can't be pushed when the app is
+    fully closed — the Due soon list is the dependable fallback.
 
-### Import parser tests
+## Tests
 
 ```bash
-npm run test:import   # unit tests for amount/date parsing, CSV, and recurring detection
+npm run test:import                                   # amount/date parsing, CSV, recurring detection (27)
+npx tsx --tsconfig tsconfig.json scripts/test-reminders.mts   # reminder computation (5)
 ```
 
 ## Tech
