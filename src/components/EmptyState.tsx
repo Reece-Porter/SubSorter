@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Button } from "./ui";
 import { IconGhost, IconPlus } from "./icons";
 import { useStore } from "@/lib/store";
@@ -20,6 +21,9 @@ export function EmptyState({ onAdd }: { onAdd: () => void }) {
         <Button variant="primary" onClick={onAdd}>
           <IconPlus width={18} height={18} /> Add your first subscription
         </Button>
+        <Link href="/import">
+          <Button variant="secondary">Import from a statement</Button>
+        </Link>
         <Button variant="ghost" onClick={loadSampleData}>
           Explore with sample data
         </Button>

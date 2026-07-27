@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import { Button } from "@/components/ui";
 import { IconPlus } from "@/components/icons";
@@ -67,11 +68,21 @@ export default function DashboardPage() {
             {active.length} active {active.length === 1 ? "subscription" : "subscriptions"}
           </p>
         </div>
-        <Button variant="primary" onClick={openAdd} className="shrink-0">
-          <IconPlus width={18} height={18} />
-          <span className="hidden sm:inline">Add subscription</span>
-          <span className="sm:hidden">Add</span>
-        </Button>
+        <div className="flex shrink-0 gap-2">
+          <Link href="/import">
+            <Button variant="secondary">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 16V4M8 8l4-4 4 4M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" />
+              </svg>
+              <span className="hidden sm:inline">Import</span>
+            </Button>
+          </Link>
+          <Button variant="primary" onClick={openAdd}>
+            <IconPlus width={18} height={18} />
+            <span className="hidden sm:inline">Add subscription</span>
+            <span className="sm:hidden">Add</span>
+          </Button>
+        </div>
       </div>
 
       {isEmpty ? (

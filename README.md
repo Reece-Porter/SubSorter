@@ -20,8 +20,29 @@ no cloud, no backend database — your financial data never leaves your device.
     time from cancelled subscriptions.
   - Always-visible **Due soon** panel (renewals within 7 days) as the reliable,
     backend-free reminder, plus optional browser notifications while the app is open.
-- **Part 2 — CSV / PDF / image import:** ⏳ planned
+- **Part 2 — CSV / PDF / image import:** ✅ built
+  - One **Import** flow for three sources (CSV, PDF, image), unified into the same
+    "review detected subscriptions" screen.
+  - Everything is processed **in the browser** — the file is never uploaded.
+  - **CSV:** robust parser (quotes, `,`/`;`/tab delimiters, header detection,
+    separate debit/credit columns, mixed date formats, sign inference).
+  - **PDF:** text extracted client-side via `pdfjs-dist` (worker served locally from
+    `/public`); scanned/image-only PDFs are detected and offered an OCR fallback.
+  - **Image / scanned PDF:** on-device OCR via `tesseract.js`.
+  - **Extraction preview** before detection, with garbled-merchant / implausible-amount /
+    missing-date rows flagged for the user to check rather than silently included.
+  - **Recurring detection** groups repeated merchant+amount charges, infers cadence,
+    predicts the next date, guesses a category, and scores confidence — uncertain
+    matches start unchecked and must be confirmed.
+  - Heavy parsers (`pdfjs-dist`, `tesseract.js`) are **lazy-loaded** — they only enter
+    the bundle when that file type is actually imported.
 - **Part 3 — Reminders:** partially in place (Due soon list + notification permission)
+
+### Import parser tests
+
+```bash
+npm run test:import   # unit tests for amount/date parsing, CSV, and recurring detection
+```
 
 ## Tech
 
