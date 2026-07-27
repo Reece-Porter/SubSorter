@@ -1,0 +1,28 @@
+import type { Metadata, Viewport } from "next";
+import "./globals.css";
+import { StoreProvider } from "@/lib/store";
+import { AppShell } from "@/components/AppShell";
+
+export const metadata: Metadata = {
+  title: "Subscription Ghost — find & cancel forgotten subscriptions",
+  description:
+    "Track recurring subscriptions, spot the ones you've forgotten, and stop paying for what you don't use. Private and on-device.",
+};
+
+export const viewport: Viewport = {
+  themeColor: "#f8fafc",
+  width: "device-width",
+  initialScale: 1,
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <body>
+        <StoreProvider>
+          <AppShell>{children}</AppShell>
+        </StoreProvider>
+      </body>
+    </html>
+  );
+}
